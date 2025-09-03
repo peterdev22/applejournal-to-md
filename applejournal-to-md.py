@@ -1,13 +1,20 @@
 import os
 import glob
-import sys
+import argparse
 import re
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-HTML_DIR = sys.argv[1]
-RESOURCES_DIR = 'Resources'
-OUTPUT_DIR = sys.argv[2]
+# command-line args
+parser = argparse.ArgumentParser(prog='applejournal-to-md', description='Convert an Apple Journal HTML entries to Markdown.')
+parser.add_argument('-i', '--input', default='Entries', required=False, help="Directory containing .html journal entries; The default is 'Entries'.")
+parser.add_argument('-ir', '--inputres', default='Resources', required=False, help="Directory containing .heic, .mp4, .json journal entry attachments; The default is 'Resources'.")
+parser.add_argument('-o', '--output', default='MarkdownOutput', required=False, help="Directory that will be created for output markdown files; The default is 'MarkdownOutput'.")
+args = parser.parse_args()
+
+HTML_DIR = args.input
+RESOURCES_DIR = args.inputres
+OUTPUT_DIR = args.output
 
 # id each 's[INT]' class
 # this must happen as apple journal generates the class styles in the order they are found in text
@@ -111,7 +118,6 @@ for input_file in glob.glob(os.path.join(HTML_DIR, '*.html')):
                 item_text = process_spans(item, format_config)
                 body.append(f'- {item_text}')
             body.append('')
-        
 
     # ----------------- output ----------------------
     md = []
