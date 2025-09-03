@@ -28,32 +28,59 @@ def id_classes(html):
         
         styles[class_] = style_config # each class will have a 4 item array identifying how the text should be formatted
 
-        print(f"{class_}: {styles[class_]}")
+    return styles
 
+# format text using its 'id'
+def format_text(id, text):
+    is_bold, is_italic, is_underline, is_strikethrough = id
 
+    if is_strikethrough:
+        text = f"~~{text}~~"
+    if is_underline:
+        text = f"<u>{text}</u>" # not a part of markdown, may not format correctly in some apps when combined with other styles
+    if is_italic:
+        text = f"*{text}*"
+    if is_bold:
+        text = f"**{text}**"
 
+    return text
 
 # create output folder
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 print(f"Created folder '{OUTPUT_DIR}'")
 
-# for all journal entries
+# repeat this for all journal entries
 for input_file in glob.glob(os.path.join(HTML_DIR, "*.html")):
     with open(input_file, "r", encoding="utf-8") as f:
         html = BeautifulSoup(f, "html.parser")
 
-    id_classes(html)
+    # find text formatting styles
+    format_config = id_classes(html)
     
-    # date
+    # find date
     date_fancy = html.find("div", class_="pageHeader").text
     date_iso = datetime.strptime(date_fancy, "%A %d %B %Y").date().isoformat()
 
-    # title
+    # find title
     title = html.find("span", class_="s2").text
 
-    # body
-    paragraphs = html.find_all("span", class_="s3")
-    body = [paragraph.text for paragraph in paragraphs]
+    # find body text and format accordingly
+    paragraphs = html.find_all("p", class_="p2")
+    body = []
+
+    for paragraph in paragraphs:
+        paragraph_text = []
+
+        for span in paragraph.find_all('span'):
+            span_text = span.get_text()
+            span_class = span.get("class")[0]
+            valid_class_pattern = r's\d+' # only match s[INT] class names
+
+            if re.match(valid_class_pattern, span_class):
+                format_id = format_config[span_class]
+                paragraph_text.append(format_text(format_id, span_text))
+
+        body.append(''.join(paragraph_text))
 
     # ----------------- output ----------------------
     md = []
