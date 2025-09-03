@@ -1,20 +1,20 @@
 import os
 import glob
+import sys
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-HTML_DIR = "Entries"
+HTML_DIR = sys.argv[1]
 RESOURCES_DIR = "Resources"
-OUTPUT_DIR = "md-output"
-
-print("program run:")
+OUTPUT_DIR = sys.argv[2]
 
 # create output folder
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+print(f"Created folder '{OUTPUT_DIR}'")
 
 # for all journal entries
-for file in glob.glob(os.path.join(HTML_DIR, "*.html")):
-    with open(file, "r", encoding="utf-8") as f:
+for input_file in glob.glob(os.path.join(HTML_DIR, "*.html")):
+    with open(input_file, "r", encoding="utf-8") as f:
         html = BeautifulSoup(f, "html.parser")
     
     # date
@@ -28,12 +28,7 @@ for file in glob.glob(os.path.join(HTML_DIR, "*.html")):
     paragraphs = html.find_all("span", class_="s3")
     body = [paragraph.text for paragraph in paragraphs]
 
-    print(date_fancy)
-    print(date_iso)
-    print(title)
-    print(body)
-
-    # output
+    # ----------------- output ----------------------
     md = []
     filename = f"{date_iso}.md"
 
@@ -48,7 +43,10 @@ for file in glob.glob(os.path.join(HTML_DIR, "*.html")):
     for paragraph in body:
         md.append(paragraph + "\n")
 
-    #write to file
-    o_path = os.path.join(OUTPUT_DIR, filename)
-    with open(o_path, "w", encoding="utf-8") as out_f:
-        out_f.write("\n".join(md))
+    # write to file
+    output_file = os.path.join(OUTPUT_DIR, filename)
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write("\n".join(md))
+    # ------------------------------------------------
+
+    print(f"Converted '{OUTPUT_DIR}/{date_iso}.md'")
