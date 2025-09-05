@@ -6,14 +6,14 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 # command-line args
-parser = argparse.ArgumentParser(prog='applejournal-to-md', description='Convert an Apple Journal HTML entries to Markdown.')
-parser.add_argument('-i', '--input', default='Entries', required=False, help="Directory containing .html journal entries; The default is 'Entries'.")
-parser.add_argument('-ir', '--inputres', default='Resources', required=False, help="Directory containing .heic, .mp4, .json journal entry attachments; The default is 'Resources'.")
-parser.add_argument('-o', '--output', default='MarkdownOutput', required=False, help="Directory that will be created for output markdown files; The default is 'MarkdownOutput'.")
+parser = argparse.ArgumentParser(prog='applejournal-to-md', description='Convert Apple Journal HTML entries to Markdown.')
+parser.add_argument('-i', '--input', required=True, help="Root directory containing Apple Journal export. Must include 'Entries/' and 'Resources/'.")
+parser.add_argument('-o', '--output', default='MarkdownOutput', required=False, help="Output directory. This will be created if it does not exist already.")
+parser.add_argument('-da', '--disable-attachments', action="store_true", required=False, help="Disable processing of attachments. If '-da' is passed, all content within 'Resources/' is ignored.")
 args = parser.parse_args()
 
-HTML_DIR = args.input
-RESOURCES_DIR = args.inputres
+ENTRIES_DIR = args.input + '/Entries'
+RESOURCES_DIR = args.input + '/Resources'
 OUTPUT_DIR = args.output
 
 # id each 's[INT]' class
@@ -75,7 +75,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 print(f"Created folder '{OUTPUT_DIR}'")
 
 # repeat this for all journal entries
-for input_file in glob.glob(os.path.join(HTML_DIR, '*.html')):
+for input_file in glob.glob(os.path.join(ENTRIES_DIR, '*.html')):
     with open(input_file, 'r', encoding='utf-8') as f:
         html = BeautifulSoup(f, 'html.parser')
 
