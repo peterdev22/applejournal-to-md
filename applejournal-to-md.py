@@ -87,7 +87,12 @@ for input_file in glob.glob(os.path.join(HTML_DIR, '*.html')):
     date_iso = datetime.strptime(date_fancy, '%A %d %B %Y').date().isoformat()
 
     # find title
-    title = html.find('span', class_='s2').text
+    title_element = html.find('span', class_='s2')
+    title = title_element.text if title_element else None
+
+    # find reflection prompt
+    prompt_element = html.find('div', class_='reflectionPrompt')
+    prompt = prompt_element.text if prompt_element else None
 
     # find body text and format accordingly
     body_elements = html.find_all(['p', 'blockquote', 'ol', 'ul'])
@@ -121,15 +126,19 @@ for input_file in glob.glob(os.path.join(HTML_DIR, '*.html')):
 
     # ----------------- output ----------------------
     md = []
-    filename = f'{date_iso}.md'
+    filename = f'{date_iso}.md' #change this, needs to be more unique
 
     # yaml properties (for use with obsidian)
     md.append('---')
     md.append('date: ' + date_iso)
     md.append('---' + '\n')
 
-    # title & body
-    md.append('# ' + title)
+    # title, prompt & body
+    if title:
+        md.append('# ' + title)
+
+    if prompt:
+        md.append('***' + prompt + '***\n')
 
     for line in body:
         md.append(line)
