@@ -123,6 +123,29 @@ for input_file in glob.glob(os.path.join(ENTRIES_DIR, '*.html')):
                 item_text = process_spans(item, format_config)
                 body.append(f'- {item_text}')
             body.append('')
+        
+    # attachments
+    attachment_elements = html.find_all('div', class_=['gridItem'])
+    photos = []
+    videos = []
+    music = []
+    locations = []
+    workouts = []
+    moods = []
+
+    for element in attachment_elements:
+        attachment_id = element.get('id')   # used to find filename
+        attachment_type = None;             # used to know how to format the attachment
+    
+        element_classes = element.get('class', [])
+        for class_name in element_classes:
+            if class_name.startswith('assetType_'):
+                attachment_type = class_name[len('assetType_'):]
+                break;
+
+        print(attachment_type + ': ' + attachment_id)
+
+    print('-'*20)
 
     # ----------------- output ----------------------
     md = []
