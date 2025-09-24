@@ -1,4 +1,4 @@
-# Convert Apple Journal to Markdown
+# Export Apple Journal as Markdown
 
 Apple Journal only allows you to export your entries as HTML files. These HTML files can be pretty messy and although they look fine in the browser, it is hard to use them with any other program.
 
@@ -39,7 +39,7 @@ python3 applejournal-to-md.py -i ~/Desktop/AppleJournalEntries/
 
 ---
 
-## Supported Conversions
+## What will be converted?
 
 ### Text - Fully Supported
 
@@ -49,22 +49,20 @@ If the majority of your journal entries are plainly formatted - it's almost guar
 
 | Type            | Supported by this program | Supported by Markdown | Implementation                            | Caveats                                                                                        |
 | --------------- | ------------------------- | --------------------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| Entry title     | Yes                       | Yes                   | Converts to `# markdown heading`          |                                                                                                |
+| Entry title     | Yes                       | Yes                   | Converts to `# markdown heading`.         |                                                                                                |
 | Plain text      | Yes                       | Yes                   | Converts to `plain markdown`.             |                                                                                                |
 | Bold            | Yes                       | Yes                   | Converts to `**bold markdown**`.          |                                                                                                |
 | Italic          | Yes                       | Yes                   | Converts to `*italic markdown*`.          |                                                                                                |
-| Underline       | Yes                       | Yes (HTML)            | Converts to `<u>underlined markdown</u>`. | Underlined text will override other styles on the same text. This is a limitation of markdown. |
-| Strikethrough   | Yes                       | Yes (Extended)        | Converts to `~~strikethrough markdown~~`. |                                                                                                |
-| Unordered lists | Yes                       | Yes                   | Converts to a `- list item`.              |                                                                                                |
-| Ordered lists   | Yes                       | Yes                   | Converts to a `1. list item`.             |                                                                                                |
-| Blockquotes     | Yes                       | Yes                   | Converts to `> markdown quote`.           |                                                                                                |
-| Coloured text   | Yes                       | Yes (Extended)        | Converts to `==highlighted markdown==`.   | Coloured text will be converted to single colour highlights.                                   |
+| Underline       | Yes                       | Maybe (HTML)          | Converts to `<u>underlined markdown</u>`. | Underlined text will override other styles on the same text when using Obsidian.               |
+| Strikethrough   | Yes                       | Maybe (Extended)      | Converts to `~~strikethrough markdown~~`. |                                                                                                |
+| Unordered lists | Yes                       | Yes                   | Converts to `- list item`.                |                                                                                                |
+| Ordered lists   | Yes                       | Yes                   | Converts to `1. list item`.               |                                                                                                |
+| Blockquotes     | Yes                       | Yes                   | Converts to `> blockquote`.               |                                                                                                |
+| Coloured text   | Yes                       | Maybe (Extended)      | Converts to `==highlighted markdown==`.   | Different coloured text will be converted to single colour highlights.                         |
 
-### Attachments - Incomplete
+### Attachments - Incomplete Support
 
-All attachments are inserted into markdown as images, but extra metadata, like the location name for a specific location, may be also included as text. If you would like to only export the text of your journal entries into markdown, use the disable attachments [command line argument](#command-line-arguments).
-
-Note the conversion of attachments is currently incomplete - but the goal is to support them all!
+Most attachments are inserted into markdown as external media, but extra metadata, like the location name for a specific location, may be included as text. If you would like to only export the text of your journal entries into markdown, use the disable attachments [command line argument](#command-line-arguments).
 
 | Type          | Supported by this program       | Implementation                                       | Caveats |
 | ------------- | ------------------------------- | ---------------------------------------------------- | ------- |
