@@ -1,12 +1,13 @@
-# Export Apple Journal as Markdown
+# Convert Apple Journal to Markdown
 
 Apple Journal only allows you to export your entries as HTML files. These HTML files can be pretty messy and although they look fine in the browser, it is hard to use them with any other program.
 
 This Python script allows you to convert these HTML files to a markdown format which is essentially raw text. This allows for more flexibility when managing these files.
 
 Useful for:
-- Backing up your journal.
-- Switching from Apple Journal to a markdown editor such as Obsidian.
+- Backing up your journal (in a readable format).
+- Switching from the Apple Journal app to a markdown editor such as Obsidian.
+- Simply exporting your Apple Journal entries to Markdown format.
 
 ## Usage
 
@@ -38,11 +39,10 @@ python3 applejournal-to-md.py -i ~/Desktop/AppleJournalEntries/
 | `-o`, `--output`               | No       | `MarkdownOutput` | Output directory. This will be created if it does not exist already.                               |
 | `-da`, `--disable-attachments` | No       | `False`          | Disable processing of attachments. If `-da` is passed, all content within `Resources/` is ignored. |
 
----
 
 ## What will be converted?
 
-### Text - Fully Supported
+### Text [Fully supported]
 
 Text should currently be fully supported and should work perfectly in most cases. In the rare case conversion messes up, please send a [GitHub issue](https://github.com/peterdev22/applejournal-to-md/issues) to help fix it!
 
@@ -62,18 +62,22 @@ If the majority of your journal entries are plainly formatted - it's almost guar
 | Blockquotes     | Yes                       | Yes                   | Converts to `> blockquote`.               |                                                                                                |
 | Coloured text   | Yes                       | Maybe (Extended)      | Converts to `==highlighted markdown==`.   | Different coloured text will be converted to single colour highlights.                         |
 
-### Attachments - Incomplete Support
+### Attachments [Not yet supported]
 
-Most attachments are inserted into markdown as external media, but extra metadata, like the location name for a specific location, may be included as text. If you would like to only export the text of your journal entries into markdown, use the disable attachments [command line argument](#command-line-arguments).
+Most attachments are inserted into markdown as external media, but extra metadata, like the location name for a specific location, may be included as text. If you would like to only export the text of your journal entries into markdown, use the disable attachments (`-da`) [command line argument](#command-line-arguments).
 
-| Type          | Supported by this program       | Implementation                                       | Caveats |
-| ------------- | ------------------------------- | ---------------------------------------------------- | ------- |
-| Prompt        | Yes                             | Prompt is in ***bold italic text*** below the title. |         |
-| Photos        | Not yet (working on it)         | -                                                    |         |
-| Videos        | Not yet (working on it)         | -                                                    |         |
-| Voice memo    | Not yet (planned)               | -                                                    |         |
-| Location      | Not yet (planned)               | -                                                    |         |
-| State of Mind | Not yet (planned)               | -                                                    |         |
-| Music         | Not yet (planned)               | -                                                    |         |
-| Workout       | Not yet (planned)               | -                                                    |         |
+| Type            | Supported by this program | Implementation                                                    | Caveats                                                                                        |
+| --------------- | ------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Prompt          | Yes                       | Prompt is in ***bold italic text*** below the title.              |                                                                                                |
+| Photos          | Not yet (working on it)   | -                                                                 |                                                                                                |
+| Videos          | Not yet (working on it)   | -                                                                 |                                                                                                |
+| Voice memo      | Not yet (planned)         | -                                                                 |                                                                                                |
+| Location        | Not yet (planned)         | -                                                                 |                                                                                                |
+| State of Mind   | Not yet (planned)         | -                                                                 |                                                                                                |
+| Music           | Not yet (planned)         | -                                                                 |                                                                                                |
+| Workout         | Not yet (planned)         | -                                                                 |                                                                                                |
 
+
+## Contributing
+
+Feel free to contribute by submitting issues and pull requests! The goal is to eventually support all attachments and styles, and the tables above will be updated as progress is made on this program.
