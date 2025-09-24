@@ -50,8 +50,8 @@ If the majority of your journal entries are plainly formatted - it's almost guar
 
 | Type            | Supported by this program | Supported by Markdown | Implementation                            | Caveats                                                                                        |
 | --------------- | ------------------------- | --------------------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| Entry date      | Yes                       | Yes                   | Converts to `# YYYY-MM-DD`.               |                                                                                                |
-| Entry title     | Yes                       | Yes                   | Converts to `## markdown heading`.        |                                                                                                |
+| Entry date      | Yes                       | Yes                   | Converts to `# markdown heading`.         |                                                                                                |
+| Entry title     | Yes                       | Yes                   | Converts to `# markdown heading`.         |                                                                                                |
 | Plain text      | Yes                       | Yes                   | Converts to `plain markdown`.             |                                                                                                |
 | Bold            | Yes                       | Yes                   | Converts to `**bold markdown**`.          |                                                                                                |
 | Italic          | Yes                       | Yes                   | Converts to `*italic markdown*`.          |                                                                                                |
