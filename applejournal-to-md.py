@@ -152,13 +152,15 @@ for input_file in glob.glob(os.path.join(ENTRIES_DIR, '*.html')):
     filename = f'{date_iso}.md' #change this, needs to be more unique
 
     # yaml properties (for use with obsidian)
-    md.append('---')
-    md.append('date: ' + date_iso)
-    md.append('---' + '\n')
+    # md.append('---')
+    # md.append('date: ' + date_iso)
+    # md.append('---' + '\n')
 
     # title, prompt & body
     if title:
-        md.append('# ' + title)
+        md.append('# ' + date_iso + ' ' + title)
+    else:
+        md.append('#' + date_iso)
 
     if prompt:
         md.append('***' + prompt + '***\n')
