@@ -18,10 +18,11 @@ Useful for:
  		- Alternatively, install it to a Python virtual env.
 
 ### Process
-1. Unzip your export (`AppleJournalEntries.zip`).
-2. This folder should have two folders - `Entries/` and `Resources/`, inside.
-3. Run the  script `applejournal-to-md.py`, the `-i` argument should pass the location of `AppleJournalEntries/`.
-4. By default a folder called `MarkdownOutput` will be created next to the script file containing all converted entries.
+1. Export your Journal - [instructions by Apple](https://support.apple.com/en-au/guide/iphone/iph4cad323fe) (it mentions it will be as a PDF - this is incorrect).
+2. Unzip your export (`AppleJournalEntries.zip`).
+3. This folder should have two folders - `Entries/` and `Resources/`, inside.
+4. Run the  script `applejournal-to-md.py`, the `-i` argument should pass the location of `AppleJournalEntries/`.
+5. By default a folder called `MarkdownOutput` will be created next to the script file containing all converted entries.
 
 #### Example Usage
 
