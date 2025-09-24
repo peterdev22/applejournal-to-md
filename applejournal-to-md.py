@@ -86,9 +86,16 @@ for input_file in glob.glob(os.path.join(ENTRIES_DIR, '*.html')):
     date_fancy = html.find('div', class_='pageHeader').text
     date_iso = datetime.strptime(date_fancy, '%A %d %B %Y').date().isoformat()
 
-    # find title
-    title_element = html.find('span', class_='s2')
-    title = title_element.text if title_element else None
+    # find title (bit weird, sometimes there are two titles)
+    title_primary = html.find('div', class_='title')
+    title_secondary = html.find('span', class_='s2')
+
+    if title_primary.text:
+        title = title_primary.text
+    elif title_secondary.text:
+        title = title_secondary.text
+    else:
+        title = None
 
     # find reflection prompt
     prompt_element = html.find('div', class_='reflectionPrompt')
@@ -143,28 +150,36 @@ for input_file in glob.glob(os.path.join(ENTRIES_DIR, '*.html')):
                 attachment_type = class_name[len('assetType_'):]
                 break;
 
-        print(attachment_type + ': ' + attachment_id)
+        # print(attachment_type + ': ' + attachment_id) # debug
 
-    print('-'*20)
+    # print('-'*20) # debug
 
     # ----------------- output ----------------------
     md = []
-    filename = f'{date_iso}.md' #change this, needs to be more unique
+    
+    # filename
+    if title:
+        title_snakecase = re.sub(r'[^\w\s-]', '', title).strip().replace(' ', '_').lower()
+        filename = f'{date_iso}_{title_snakecase}.md'
+    else:
+        filename = f'{date_iso}.md'
 
     # yaml properties (for use with obsidian)
     # md.append('---')
     # md.append('date: ' + date_iso)
     # md.append('---' + '\n')
 
-    # title, prompt & body
+    # title
     if title:
         md.append('# ' + date_iso + ' ' + title)
     else:
-        md.append('#' + date_iso)
+        md.append('# ' + date_iso)
 
+    # prompt
     if prompt:
         md.append('***' + prompt + '***\n')
 
+    # body
     for line in body:
         md.append(line)
 
@@ -174,4 +189,4 @@ for input_file in glob.glob(os.path.join(ENTRIES_DIR, '*.html')):
         f.write('\n'.join(md))
     # ------------------------------------------------
 
-    print(f"Converted '{OUTPUT_DIR}/{date_iso}.md'")
+    print(f"Converted '{OUTPUT_DIR}/{filename}'")
