@@ -99,7 +99,7 @@ for input_file in glob.glob(os.path.join(ENTRIES_DIR, '*.html')):
 
     # find reflection prompt
     prompt_element = html.find('div', class_='reflectionPrompt')
-    prompt = prompt_element.text if prompt_element else None
+    prompt = prompt_element.text if prompt_element and not args.disable_attachments else None
 
     # find body text and format accordingly
     body_elements = html.find_all(['p', 'blockquote', 'ol', 'ul'])
