@@ -64,13 +64,13 @@ If the majority of your journal entries are plainly formatted - it's almost guar
 
 ### Attachments [Not yet supported]
 
-Most attachments are inserted into markdown as external media, but extra metadata, like the location name for a specific location, may be included as text. If you would like to only export the text of your journal entries into markdown, use the disable attachments (`-da`) [command line argument](#command-line-arguments).
+Most of these attachments will be inserted into markdown as external media, but any extra metadata, like the location name for a specific location, may be included as text. If you would like to only export the text of your journal entries into markdown, use the disable attachments (`-da`) [command line argument](#command-line-arguments).
 
 | Type            | Supported by this program | Implementation                                                    | Caveats                                                                                        |
 | --------------- | ------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | Prompt          | Yes                       | Prompt is in ***bold italic text*** below the title.              |                                                                                                |
-| Photos          | Not yet (working on it)   | -                                                                 |                                                                                                |
-| Videos          | Not yet (working on it)   | -                                                                 |                                                                                                |
+| Photos          | Not yet (planned)         | -                                                                 |                                                                                                |
+| Videos          | Not yet (planned)         | -                                                                 |                                                                                                |
 | Voice memo      | Not yet (planned)         | -                                                                 |                                                                                                |
 | Location        | Not yet (planned)         | -                                                                 |                                                                                                |
 | State of Mind   | Not yet (planned)         | -                                                                 |                                                                                                |
